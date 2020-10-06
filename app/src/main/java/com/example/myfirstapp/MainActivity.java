@@ -19,9 +19,28 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Created!");
         android.util.Log.d("tag", "Created a log entry.....");
         super.onCreate(savedInstanceState);
-        MyDisplayListener myListener = new MyDisplayListener();
+//        MyDisplayListener myListener = new MyDisplayListener();
+
+
+        DisplayManager.DisplayListener mDisplayListener = new DisplayManager.DisplayListener() {
+            @Override
+            public void onDisplayAdded(int displayId) {
+                android.util.Log.i("tag", "Display #" + displayId + " added.");
+            }
+
+            @Override
+            public void onDisplayChanged(int displayId) {
+                android.util.Log.i("tag", "Display #" + displayId + " changed.");
+            }
+
+            @Override
+            public void onDisplayRemoved(int displayId) {
+                android.util.Log.i("tag", "Display #" + displayId + " removed.");
+            }
+        };
+
         dManager = getSystemService((DisplayManager.class));
-        dManager.registerDisplayListener(myListener, null);
+        dManager.registerDisplayListener(mDisplayListener, null);
         Display[] displays = dManager.getDisplays();
         for (Display display : displays) {
 //            System.out.println(display);
